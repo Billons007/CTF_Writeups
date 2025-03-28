@@ -1030,6 +1030,8 @@ Matches the actual output after `user_input` is transformed.
 
 ### Second Loop
 
+> **WARNING: Before you reading this part, please understand: This part is likely based on incorrect assumptions!**
+
 Next is the second loop. The pseudocode from IDA is the same incorrectly analyzed code as the first loop's assignment:
 
 ```c
@@ -1265,6 +1267,8 @@ From the code, we can see that `sub_804A151` takes the pointer to `user_input[j]
 Since this operation is irreversible, we need to implement an equivalent function and restore the state of `user_input` before this transformation.
 
 ### The Trap - The Broken Function
+
+> **WARNING: Before you reading this part, please understand: This part is likely based on incorrect assumptions!**
 
 Now, it seems we have completely elucidated the logic of the three important transformations, and the flag appears within reach... Is that really the case? Unfortunately, what follows is the most vicious trap.
 
