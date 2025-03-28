@@ -2,16 +2,20 @@
 
 ## Intro
 
+> WARNING: This writeup is using Non-standard solution, it's not official correct way to solve this challenge, please check: [Official Writeup](https://github.com/hackthebox/cyber-apocalypse-2025/blob/main/reversing/%5BHard%5D%20Gateway/README.md)
+
+> 2025/03/28 Update: WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
+> The author assumes that all challengers know about the x86/x64 runtime transitions in the Linux kernel source code or the (extremely uncommon) Heavensgate feature under Linux (segment selector behavior that depends on architecture and platform specific values).
+> This is why it is extremely difficult to solve this challenge by the usual path, and it is almost never a standard solution.
+
 After solving the first four easy challenges and spending several hours overnight for the 'medium difficulty' but actually 'difficulty-fraudulent' `Singlestep` (whose solve count hovered around 200, similar to `Gateway`), it was already 05:22 (GMT+9) on the deadline day, less than 17 hours before the deadline at 22:00 (GMT+9). Next up was `Gateway`, the hardest challenge apart from `HeartProtector` (37 solves, less than 0.5% team solve rate), which was also my final goal for this CTF. As mentioned before, because I only remembered this competition on the last day, I had less than 25 hours left when I started, so this was the last reverse engineering challenge I focused on.
 
 > Notice:
->
-> At the time of the author's submission (1 hour and 45 minutes before the deadline), the total solve count ratio was 171/8.1k (team ratio) or 171/18k (individual ratio). If considering only reverse engineering challenges category, it was 171/2272 (team ratio).
+> At the time of the my submission (1 hour and 45 minutes before the deadline), the total solve count ratio was 171/8.1k (team ratio) or 171/18k (individual ratio). If considering only reverse engineering challenges category, it was 171/2272 (team ratio).
 > When I started, the total solve count ratio was 74/8.1k (team ratio) or 74/18k (individual ratio). If considering only reverse engineering challenges category, it was 74/2272 (team ratio).
 
 > Notice:
->
-> During GDB debugging, the author used `x/16dx` or `x/16dd` to display 16 elements of 32-bit memory. In reality, the correct usage should be `x/16wx` or `x/16wd`. Although my usage didn't cause errors (the format flag at the end actually overrides the preceding one), don't pick up this bad habit. I will correct this after this time.
+> During GDB debugging, I used `x/16dx` or `x/16dd` to display 16 elements of 32-bit memory. In reality, the correct usage should be `x/16wx` or `x/16wd`. Although my usage didn't cause errors (the format flag at the end actually overrides the preceding one), don't pick up this bad habit. I will correct this after this time.
 
 ## Reverse Part.0: Reconnaissance
 
