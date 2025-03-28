@@ -2,7 +2,9 @@
 
 ## Intro
 
-> WARNING: This writeup is using Non-standard solution, it's not official correct way to solve this challenge, please check: [Official Writeup](https://github.com/hackthebox/cyber-apocalypse-2025/blob/main/reversing/%5BHard%5D%20Gateway/README.md)
+> **WARNING: This writeup is using Non-standard solution, it's not official correct way to solve this challenge, please check: [Official Writeup](https://github.com/hackthebox/cyber-apocalypse-2025/blob/main/reversing/%5BHard%5D%20Gateway/README.md)
+> Some of the assumptions and conclusions in this writeup are wrong or based on incorrect premises. 
+> It is highly recommended to read the official writeup before reading this writeup.**
 
 > 2025/03/28 Update: WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
 > The author assumes that all challengers know about the x86/x64 runtime transitions in the Linux kernel source code or the (extremely uncommon) Heavensgate feature under Linux (segment selector behavior that depends on architecture and platform specific values).
