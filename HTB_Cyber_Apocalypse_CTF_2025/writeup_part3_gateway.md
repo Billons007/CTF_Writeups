@@ -2,11 +2,11 @@
 
 ## Intro
 
-> **WARNING: This writeup is using Non-standard solution, it's not official correct way to solve this challenge, please check: [Official Writeup](https://github.com/hackthebox/cyber-apocalypse-2025/blob/main/reversing/%5BHard%5D%20Gateway/README.md)
+> **WARNING: This writeup is using Non-standard solution, it's not official correct way to solve this challenge, please check: [Official Writeup](https://github.com/hackthebox/cyber-apocalypse-2025/blob/main/reversing/%5BHard%5D%20Gateway/README.md)**
 > 
-> Some of the assumptions and conclusions in this writeup are wrong or based on incorrect premises. 
+> **Some of the assumptions and conclusions in this writeup are wrong or based on incorrect premises.**
 > 
-> It is highly recommended to read the official writeup before reading this writeup.**
+> **It is highly recommended to read the official writeup before reading this writeup.**
 
 > 2025/03/28 Update: WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
 > 
@@ -1286,7 +1286,7 @@ Running it gives:
 ['0x9ae5eb68', '0x76a54b33', '0x4f93f609', '0xe012c5af', '0xd702145c', '0xc5265f4', '0x9ae5eb68', '0x381ca83a', '0xc5265f4', '0x381ca83a', '0xe5f0e1e8', '0xe012c5af', '0x12a1500', '0xc5265f4', '0xe012c5af', '0x9ae5eb68', '0xaeab26a6', '0xd702145c', '0x9ae5eb68', '0x4ccdea34', '0xe012c5af', '0x76a54b33', '0xe5f0e1e8', '0x4f93f609', '0x4f93f609', '0xaeab26a6', '0xe012c5af', '0xc5265f4', '0x9ae5eb68', '0x4ccdea34', '0x4ccdea34', '0x12a1500']
 ```
 
-**The results don't match! ** Why is this happening? Let's add breakpoints at a finer granularity within the inner loop of and record the `val`:
+**The results don't match!** Why is this happening? Let's add breakpoints at a finer granularity within the inner loop of and record the `val`:
 
 ![Snipaste_2025-03-27_12-04-24](./img/Snipaste_2025-03-27_12-04-24.png)
 
@@ -1366,7 +1366,7 @@ So, I started single-stepping through the instructions near the shift, trying to
 
 ![ss_018](./img/ss_018.jpg)
 
-However, something unexpected happened: **After single-stepping past the dead code, the output actually matched the output of the C++ implementation. This indicates that the dead code actually affects the function's behavior in the original execution! ** 
+However, something unexpected happened: **After single-stepping past the dead code, the output actually matched the output of the C++ implementation. This indicates that the dead code actually affects the function's behavior in the original execution!** 
 
 After spending a lot of time stuck and thinking, I finally realized: **this is actually not anti-debugging, but most likely the dead code causing unpredictable deviations in the function's behavior, and no standard equivalent implementation can reproduce this effect.** When I reached this conclusion, it was already 18:20 (GMT+9) on the deadline afternoon, less than 3 hours and 40 minutes before the deadline.
 
