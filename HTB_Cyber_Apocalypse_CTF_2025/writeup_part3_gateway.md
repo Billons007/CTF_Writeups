@@ -1030,7 +1030,7 @@ Matches the actual output after `user_input` is transformed.
 
 ### Second Loop
 
-> **WARNING: Before you reading this part, please understand: This part is likely based on incorrect assumptions!**
+> **WARNING: Before you reading this part, please understand: Most of this part should actually be based on x86-64 analysis, while the following content uses x86 analysis and is therefore likely to be wrong!**
 
 Next is the second loop. The pseudocode from IDA is the same incorrectly analyzed code as the first loop's assignment:
 
@@ -1268,7 +1268,7 @@ Since this operation is irreversible, we need to implement an equivalent functio
 
 ### The Trap - The Broken Function
 
-> **WARNING: Before you reading this part, please understand: This part is likely based on incorrect assumptions!**
+> **WARNING: Before you reading this part, please understand: Most of this part should actually be based on x86-64 analysis, while the following content uses x86 analysis and is therefore likely to be wrong!**
 
 Now, it seems we have completely elucidated the logic of the three important transformations, and the flag appears within reach... Is that really the case? Unfortunately, what follows is the most vicious trap.
 
