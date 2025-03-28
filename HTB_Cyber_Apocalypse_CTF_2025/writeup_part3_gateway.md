@@ -63,6 +63,8 @@ strace -k ./gateway
 
 However, reality hit me hard. `strace` did trace the calls, but `backtrace` failed—`strace` does not support call stack tracing for 32-bit programs in a 64-bit environment.
 
+> 2025/03/28 Update: It seems more like after switching to 64-bit mode, strace is tracing incorrectly with the premise of a 32-bit program, thus causing the failure.
+
 At this point, it was already 6 AM, less than 16 hours before the deadline. I couldn't risk another failure by setting up a 32-bit environment on the spot, so this path was also blocked.
 
 ### take2
@@ -128,6 +130,8 @@ popf ; Restore environment - Flag register
 popa ; Restore environment - General registers
 ...
 ```
+
+> 2025/03/28 Update: A value of 0x23 causes the program to execute in 32 bit mode, while a value of 0x33 causes the program to execute in 64 bit mode.
 
 After some analysis, the purpose of this pattern becomes clear - it's a `call` implemented using `retf` and `far proc`. Therefore, we can simply replace it with a `call`, but the problem is we don't know how many instances of this pattern exist yet, so pattern matching is needed.
 
@@ -569,6 +573,8 @@ So when does `length` change? Obviously, it's after the call to `sub_8049A51`. S
 
 ### First Loop
 
+> **WARNING: Before you reading this part, please understand: Most of this part should actually be based on x86-64 analysis, while the following content uses x86 analysis and is therefore likely to be wrong!**
+
 Since this function cannot be converted to pseudocode, let's look at the assembly:
 
 ```assembly
@@ -794,6 +800,8 @@ From this, it can be seen that this operation actually swaps adjacent pairs of b
 
 ### Call to Transformation Function
 
+> **WARNING: Before you reading this part, please understand: Most of this part should actually be based on x86-64 analysis, while the following content uses x86 analysis and is therefore likely to be wrong!**
+
 Now that we know the effect of the first loop, let's continue executing and analyzing downwards:
 
 ```c
@@ -932,6 +940,8 @@ I spent a lot of time here. However, although we cannot trace the calculation pr
 Therefore, we can set a breakpoint at `int mod_idx = v5 % 32;` and analyze `v5`. `v5` has a different value in each loop iteration, but these values are fixed and do not change based on the input. So we only need to obtain all 32 values. 
 
 > Notice: Because I thought manual recording might be faster than writing a script at the time, I didn't write a GDB script to automate the recording.
+
+> 2025/03/28 Update: This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
 
 Finally, we obtained the constants as follows:
 
@@ -1368,11 +1378,15 @@ So, I started single-stepping through the instructions near the shift, trying to
 
 However, something unexpected happened: **After single-stepping past the dead code, the output actually matched the output of the C++ implementation. This indicates that the dead code actually affects the function's behavior in the original execution!** 
 
+> 2025/03/28 Update: This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
+
 After spending a lot of time stuck and thinking, I finally realized: **this is actually not anti-debugging, but most likely the dead code causing unpredictable deviations in the function's behavior, and no standard equivalent implementation can reproduce this effect.** When I reached this conclusion, it was already 18:20 (GMT+9) on the deadline afternoon, less than 3 hours and 40 minutes before the deadline.
 
 This is undoubtedly a trap meticulously designed by the challenge author to waste the challenger's time, and an insidious trap set right at the final "last mile" moment. Obviously, it was particularly effective against someone like me who was short on time.
 
 ### Escaping the Trap - Bypassing the Maginot Line
+
+> **WARNING: Before you reading this part, please understand: This part is likely based on incorrect assumptions!**
 
 *Could this be an unsolvable problem? No, that's impossible. Since there are people who submitted successfully, there must be a solution.*
 
