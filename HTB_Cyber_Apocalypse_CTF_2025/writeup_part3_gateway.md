@@ -63,7 +63,7 @@ strace -k ./gateway
 
 However, reality hit me hard. `strace` did trace the calls, but `backtrace` failed—`strace` does not support call stack tracing for 32-bit programs in a 64-bit environment.
 
-> 2025/03/28 Update: It seems more like after switching to 64-bit mode, strace is tracing incorrectly with the premise of a 32-bit program, thus causing the failure.
+> 2025/03/28 Update(After reading official writeup): It seems more like after switching to 64-bit mode, strace is tracing incorrectly with the premise of a 32-bit program, thus causing the failure.
 
 At this point, it was already 6 AM, less than 16 hours before the deadline. I couldn't risk another failure by setting up a 32-bit environment on the spot, so this path was also blocked.
 
