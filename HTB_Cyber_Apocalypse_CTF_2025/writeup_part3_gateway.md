@@ -8,7 +8,7 @@
 > 
 > **It is highly recommended to read the official writeup before reading this writeup.**
 
-> 2025/03/28 Update: WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
+> 2025/03/28 Update(After reading official writeup): WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
 > 
 > The author assumes that all challengers know about the x86/x64 runtime transitions in the Linux kernel source code or the (extremely uncommon) Heavensgate feature under Linux (segment selector behavior that depends on architecture and platform specific values).
 > 
@@ -131,7 +131,7 @@ popa ; Restore environment - General registers
 ...
 ```
 
-> 2025/03/28 Update: A value of 0x23 causes the program to execute in 32 bit mode, while a value of 0x33 causes the program to execute in 64 bit mode.
+> 2025/03/28 Update(After reading official writeup): A value of 0x23 causes the program to execute in 32 bit mode, while a value of 0x33 causes the program to execute in 64 bit mode.
 
 After some analysis, the purpose of this pattern becomes clear - it's a `call` implemented using `retf` and `far proc`. Therefore, we can simply replace it with a `call`, but the problem is we don't know how many instances of this pattern exist yet, so pattern matching is needed.
 
@@ -733,6 +733,8 @@ sub_804A118 endp
 
 Then, using GDB single-stepping, we find that the numerous `dec eax` instructions seem to be skipped. In fact, these instructions are dead code, so we need to remove them.
 
+> 2025/03/29 Update(After reading official writeup): Actually it's **NOT** dec eax or deadcode, but the disassembler (whether GDB or IDA) incorrectly interprets 64-bit instructions under the premise of 32-bit. Inserting a single-step breakpoint or nop those `dec eax` here is likely to cause incorrect behavior!
+
 After removing all the dead code, we get the following pseudocode:
 
 ```c
@@ -941,7 +943,7 @@ Therefore, we can set a breakpoint at `int mod_idx = v5 % 32;` and analyze `v5`.
 
 > Notice: Because I thought manual recording might be faster than writing a script at the time, I didn't write a GDB script to automate the recording.
 
-> 2025/03/28 Update: This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
+> 2025/03/28 Update(After reading official writeup): This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
 
 Finally, we obtained the constants as follows:
 
@@ -1382,7 +1384,7 @@ So, I started single-stepping through the instructions near the shift, trying to
 
 However, something unexpected happened: **After single-stepping past the dead code, the output actually matched the output of the C++ implementation. This indicates that the dead code actually affects the function's behavior in the original execution!** 
 
-> 2025/03/28 Update: This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
+> 2025/03/28 Update(After reading official writeup): This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
 >
 > So let's think *actually* why it will be this behavior, when GDB single-steps, it actually inserts a temporary int3 under each instruction.
 >
@@ -2140,6 +2142,14 @@ This challenge can be said to be one of the finale challenges of this CTF. It no
 *   Dead code obfuscation logic trap in the first transformation
 *   Invalid memory address trap in the second transformation
 *   Irreversible algorithm and unsolvable behavior trap in the third transformation
+
+> 2025/03/29 Update(After reading official writeup): Actually only:
+>
+> - Static linking compilation, no import symbols
+> - ELF32 based heavensgate
+> - `retf` obfuscation(also heavensgate)
+> - Dead branch jump traps in outer wrapper function calls
+> - Irreversible algorithm in the third transformation
 
 Submission time was 20:15 (GMT+9), just 1 hour and 45 minutes before the deadline.
 
