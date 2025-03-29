@@ -1383,6 +1383,12 @@ So, I started single-stepping through the instructions near the shift, trying to
 However, something unexpected happened: **After single-stepping past the dead code, the output actually matched the output of the C++ implementation. This indicates that the dead code actually affects the function's behavior in the original execution!** 
 
 > 2025/03/28 Update: This behavior more likely cause using x86 to parse x64, GDB also do this because it assumes that the program is 32-bit at runtime based on ELF32
+>
+> So let's think *actually* why it will be this behavior, when GDB single-steps, it actually inserts a temporary int3 under each instruction.
+>
+> But if GDB incorrectly interprets an x86-64 instruction as x86, it will insert int3 at the **wrong place**, thus corrupting the instruction.
+>
+> In this example, the int3 inserted by GDB actually turns the x86-64 instruction into **two x86 instructions**, which is consistent with the CRC64 function we implemented incorrectly based on the 32-bit premise, so the same result will appear when single-stepping.
 
 After spending a lot of time stuck and thinking, I finally realized: **this is actually not anti-debugging, but most likely the dead code causing unpredictable deviations in the function's behavior, and no standard equivalent implementation can reproduce this effect.** When I reached this conclusion, it was already 18:20 (GMT+9) on the deadline afternoon, less than 3 hours and 40 minutes before the deadline.
 
