@@ -8,12 +8,6 @@
 > 
 > **It is highly recommended to read the official writeup before reading this writeup.**
 
-> 2025/03/28 Update(After reading official writeup): WTF??? Come on, challenge author, how many challengers would go through the complete source code of the Linux kernel x86 architecture and conduct an in-depth analysis, let alone such an unpopular technology?? 
-> 
-> The author assumes that all challengers know about the x86/x64 runtime transitions in the Linux kernel source code or the (extremely uncommon) Heavensgate feature under Linux (segment selector behavior that depends on architecture and platform specific values).
-> 
-> This is why it is extremely difficult to solve this challenge by the usual path, and it is almost never a standard solution.
-
 After solving the first four easy challenges and spending several hours overnight for the 'medium difficulty' but actually 'difficulty-fraudulent' `Singlestep` (whose solve count hovered around 200, similar to `Gateway`), it was already 05:22 (GMT+9) on the deadline day, less than 17 hours before the deadline at 22:00 (GMT+9). Next up was `Gateway`, the hardest challenge apart from `HeartProtector` (37 solves, less than 0.5% team solve rate), which was also my final goal for this CTF. As mentioned before, because I only remembered this competition on the last day, I had less than 25 hours left when I started, so this was the last reverse engineering challenge I focused on.
 
 > Notice:
